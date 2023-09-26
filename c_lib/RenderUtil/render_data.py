@@ -6,7 +6,6 @@ import torch
 import trimesh
 import math
 
-from c_lib.RenderUtil.dist import RenderUtils
 import scipy.io as sio
 import time
 import matplotlib.pyplot as plt
@@ -332,8 +331,8 @@ def main():
             # yaw_new=list(range(0,1, 1));
             # render(output_dir2, input_folder, subject_name, Ks_new, RTs_new, VDs_new, total_num_cams, yaw_new, pitch, num_cams=1, img_size=img_size)
 
-
-main()
+if __name__ == '__main__':
+    main()
 # if __name__ == '__main__':
 #     render_real_cameras()
     

@@ -1,7 +1,0 @@
-setup.py
-./src/infer_mlp.cu
-infer_nerf.egg-info/PKG-INFO
-infer_nerf.egg-info/SOURCES.txt
-infer_nerf.egg-info/dependency_links.txt
-infer_nerf.egg-info/requires.txt
-infer_nerf.egg-info/top_level.txt

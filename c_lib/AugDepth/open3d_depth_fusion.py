@@ -60,14 +60,14 @@ if __name__ == '__main__':
 
     o3d_fusion = O3DepthFusion(voxel_len=1 / 512.0, sdf_trunc=0.01, depth_trunc=3.0, write_able=True, view_able=False)
     
-    base_dir  = './test_data'
+    base_dir  = './c_lib/AugDepth/test_data'
     rgbs_path = os.path.join(base_dir, 'color')
     depths_path = os.path.join(base_dir, 'depth')
     cam_params = os.path.join(base_dir, 'param')
     masks_path = os.path.join(base_dir, 'mask')
-    depth_path = './noise_depth_0_0.png'
+    depth_path = './c_lib/AugDepth/noise_depth_0_0.png'
 
-    output_path = './noised_pds.ply'
+    output_path = './c_lib/AugDepth/noised_pds.ply'
 
     rgb_datas = []; depth_datas = []; RTs = []; Ks = []
 

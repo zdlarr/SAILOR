@@ -1,8 +1,0 @@
-setup.py
-./src/render_utils.cpp
-./src/render_utils_kernel.cu
-RenderMesh.egg-info/PKG-INFO
-RenderMesh.egg-info/SOURCES.txt
-RenderMesh.egg-info/dependency_links.txt
-RenderMesh.egg-info/requires.txt
-RenderMesh.egg-info/top_level.txt

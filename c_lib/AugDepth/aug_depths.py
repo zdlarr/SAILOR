@@ -6,7 +6,7 @@ from c_lib.AugDepth import DepthAug
 import matplotlib.pyplot as plt
 
 def augment_depth_maps_v0(depth, mask):
-    dot_pattern  = cv2.imread('./data/kinect-pattern_3x3.png', 0).astype(np.float32)
+    dot_pattern  = cv2.imread('./c_lib/AugDepth/data/kinect-pattern_3x3.png', 0).astype(np.float32)
     K = np.array([[320,0,256],[0,320,256],[0,0,1]]).astype(np.float32)
     aug_depth_map = np.copy(depth).astype(np.float32)
     depths_blur = cv2.GaussianBlur(depth, (3,3), 1.0)
@@ -95,16 +95,16 @@ def augment_depth_maps(depth, mask):
 if __name__ == '__main__':
     
     # resize to 512 * 512
-    depth = cv2.imread('./test_data/depth/0_0.png', -1) / 10000.0
+    depth = cv2.imread('./c_lib/AugDepth/test_data/depth/0_0.png', -1) / 10000.0
     depth = cv2.resize(depth, (512,512), interpolation=cv2.INTER_NEAREST)
-    mask = cv2.imread('./test_data/mask/0_0.png', -1) / 256
+    mask = cv2.imread('./c_lib/AugDepth/test_data/mask/0_0.png', -1) / 256
     mask = cv2.resize(mask, (512,512), interpolation=cv2.INTER_NEAREST)
 
     aug_depth = augment_depth_maps_v0(depth, mask)
     # aug_depth = augment_depth_maps_v1(depth, mask)
     print(np.max(aug_depth))
     plt.imshow(aug_depth * 10000)
-    plt.savefig('./noise_depth_0_0_plt.png')
+    plt.savefig('./c_lib/AugDepth/noise_depth_0_0_plt.png')
     plt.show()
-    cv2.imwrite('./noise_depth_0_0.png', (aug_depth * 10000).astype(np.uint16))
+    cv2.imwrite('./c_lib/AugDepth/noise_depth_0_0.png', (aug_depth * 10000).astype(np.uint16))
 
