@@ -1,12 +1,9 @@
 # test the depth denoising on real-captured data.
 
 import os
-import time
 import torch
 import torch.nn.functional as F
 from options.RenTrainOptions import RenTrainOptions
-
-import matplotlib.pyplot as plt
 
 import numpy as np
 import cv2
@@ -56,20 +53,29 @@ def inference(o3d_fusion, bodydrm, depth_normalizer, data_basic_dir, output_dir,
     rgb_datas *= 0
     rgb_datas += 200;
     depth_datas = depths_ds[:,0].cpu().detach().numpy()
-
     Ks = np.stack([K]*1, axis=0)
     RTs = np.stack([RT]*1, axis=0)
     new_K = np.array([[320, 0, 256],[0, 320, 256],[0,0,1]], dtype=np.float32)
     new_K = np.stack([new_K]*1, axis=0) # [4,3,3]
     new_RT = (np.linalg.inv(new_K) @ Ks) @ RTs # [4,3,4]
-
+    # save the refined depth maps.
     util.make_dir(output_dir)
-    o3d_fusion.fusion(rgb_datas, depth_datas, new_RT, new_K, True, output_dir + 'test_pcd_' + frame_idx + '.ply')
+    o3d_fusion.fusion(rgb_datas, depth_datas, new_RT, new_K, True, output_dir + 'refined_pcd_' + frame_idx + '.ply')
+    
+    # save the original depth maps.
+    rgb_datas *= 0
+    rgb_datas[..., 0] += 150;
+    rgb_datas[..., 1] += 150;
+    rgb_datas[..., 2] += 200;
+    depth_datas = cv2.resize(depth, (512,512), interpolation=cv2.INTER_NEAREST)[None]
+    o3d_fusion.volume.reset()
+    o3d_fusion.fusion(rgb_datas, depth_datas, new_RT, new_K, True, output_dir + 'ori_pcd_' + frame_idx + '.ply')
+
     print('write depth(point cloud) to ./depth_denoising/results/test_pcd.ply')
 
 if __name__ == '__main__':
-    basic_path = './test_data/static_data0/'
+    basic_path = './test_data/static_data1/'
     output_dir = './depth_denoising/results/'
-    frame_idx  = 'FRAME0001'
+    frame_idx  = 'FRAME3746'
     o3d_fusion, bodydrm, depth_normalizer = initialize()
-    inference(o3d_fusion, bodydrm, depth_normalizer, basic_path, output_dir, frame_idx, '7')
+    inference(o3d_fusion, bodydrm, depth_normalizer, basic_path, output_dir, frame_idx, '4')
