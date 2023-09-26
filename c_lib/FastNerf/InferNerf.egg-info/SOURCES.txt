@@ -1,0 +1,8 @@
+setup.py
+./src/binding.cpp
+./src/infer_mlp.cu
+InferNerf.egg-info/PKG-INFO
+InferNerf.egg-info/SOURCES.txt
+InferNerf.egg-info/dependency_links.txt
+InferNerf.egg-info/requires.txt
+InferNerf.egg-info/top_level.txt
