@@ -30,7 +30,7 @@ import logging
     1. the original multi-view RGBs information.
     2. the original depth & mask images.
     3. the corresponding cameras' parameters.
-    4. the argumented depth masp.
+    4. the argumented depth maps.
     The training dataset are from the Thuman 2.0 dataset.
 """
 
@@ -39,29 +39,29 @@ class RenTrainDataloader(object):
     def __init__(self, opts, phase='training'):
         super(RenTrainDataloader, self).__init__()
         self.dataset = RenTrainDataset(opts, phase)
-        # logging.basicConfig(level=logging.INFO if torch.distributed.get_rank() in [-1, 0] else logging.WARN)
-        # logging.info('Dataset [%s] was created' % type(self.dataset).__name__)
+        logging.basicConfig(level=logging.INFO if torch.distributed.get_rank() in [-1, 0] else logging.WARN)
+        logging.info('Dataset [%s] was created' % type(self.dataset).__name__)
         
-        # if opts.support_DDP: # using DDP dataloader.
-        #     train_sampler = torch.utils.data.distributed.DistributedSampler(self.dataset, 
-        #                                                                     shuffle=not opts.serial_batches if phase == 'training' else False)
-        #     self.dataloader = data.DataLoader(
-        #         self.dataset,
-        #         batch_size=opts.batch_size if phase == 'training' else 1,
-        #         # shuffle=not opts.serial_batches,
-        #         num_workers=int(opts.num_threads),
-        #         pin_memory=opts.pin_memory,
-        #         sampler=train_sampler
-        #     )
+        if opts.support_DDP: # using DDP dataloader.
+            train_sampler = torch.utils.data.distributed.DistributedSampler(self.dataset, 
+                                                                            shuffle=not opts.serial_batches if phase == 'training' else False)
+            self.dataloader = data.DataLoader(
+                self.dataset,
+                batch_size=opts.batch_size if phase == 'training' else 1,
+                # shuffle=not opts.serial_batches,
+                num_workers=int(opts.num_threads),
+                pin_memory=opts.pin_memory,
+                sampler=train_sampler
+            )
         
-        # else: # simple dataloader.
-        self.dataloader = data.DataLoader(
-            self.dataset,
-            batch_size=opts.batch_size if phase == 'training' else 1,
-            shuffle=not opts.serial_batches if phase == 'training' else False,
-            num_workers=int(opts.num_threads),
-            pin_memory=opts.pin_memory
-        )
+        else: # simple dataloader.
+            self.dataloader = data.DataLoader(
+                self.dataset,
+                batch_size=opts.batch_size if phase == 'training' else 1,
+                shuffle=not opts.serial_batches if phase == 'training' else False,
+                num_workers=int(opts.num_threads),
+                pin_memory=opts.pin_memory
+            )
         
     def __len__(self):
         return len(self.dataloader)
@@ -446,10 +446,9 @@ if __name__ == '__main__':
         rgbs   = data['rgbs']
         masks  = data['masks']
         verts  = data['target_verts']
-        # print(depths.shape,rgbs.shape,masks.shape,ks.shape, rts.shape,names)
 
         from utils_render.util import save_points
-        save_points('/home/yons/my_Rendering/SAILOR/checkpoints_rend/Rend_v2_27', verts[0].permute(1,0))
+        save_points('./checkpoints_rend/SAILOR', verts[0].permute(1,0))
         print(verts.shape)
         plt.imshow(depths[0,0,0].cpu().numpy() * 10000)
         plt.show()
@@ -459,11 +458,6 @@ if __name__ == '__main__':
         plt.imshow(masks[0,0,0].cpu().numpy() * 10000)
         plt.show()
         
-        # plt.imshow(rgbs[0,0].cpu().numpy())
-        # plt.show()
-        
         plt.imshow(rgbs[0,0].cpu().numpy().transpose(1,2,0))
         plt.show()
-        # print(ks, rts)
-        
-        # exit()
+        exit()
