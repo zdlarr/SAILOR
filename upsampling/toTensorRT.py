@@ -13,12 +13,23 @@ if not opts.test_tensorRT:
     human_nerf_path = './checkpoints_rend/SAILOR/latest_model_BasicRenNet.pth'
     filter_2d_high_res = FeatureNet().to('cuda:0').eval()
     
-    filter_2d_high_res.load_state_dict(torch.load(human_nerf_path), strict=False)
-
+    state_dict = torch.load(human_nerf_path)
+    state_dicts_ = {}
+    filter_2d_dict = filter_2d_high_res.state_dict()
+    
+    for k, v in state_dict.items():
+        module_names = k.split('.')
+        if module_names[0] == 'filter_2d_high_res':
+            key_ = '.'.join(module_names[1:])
+            state_dicts_[key_] = v
+    filter_2d_dict.update(state_dicts_)
+    filter_2d_high_res.load_state_dict( filter_2d_dict, strict=True )
+    print('fin load high-res unet model..')
     filter_2d_high_res_trt = TRTModule()
     x = torch.randn([4, 3, 1024, 1024], requires_grad=False).to('cuda:0')
     
-    filter_2d_high_res_trt = torch2trt(filter_2d_high_res, [x], max_batch_size=4, fp16_mode=True, strict_type_constraints=False)
+    print('transform to tensorrt model...')
+    filter_2d_high_res_trt = torch2trt(filter_2d_high_res, [x], max_batch_size=4, fp16_mode=True)
     util.make_dir('./accelerated_models')
     torch.save(filter_2d_high_res_trt.state_dict(), './accelerated_models/high_res_unet_trt.pth')
 else:
