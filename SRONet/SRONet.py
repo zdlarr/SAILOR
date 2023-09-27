@@ -139,7 +139,7 @@ class SRONet(BasicNet):
             param.requires_grad = False
             
     def _load_depth_refine_model(self):
-        model_path = './accelerated_models/depth_refine.pth'
+        model_path = './checkpoints_rend/SAILOR/latest_model_BodyDRM2.pth'
         self.depth_refine.load_state_dict( torch.load( model_path, map_location=str(self.device) ), strict=False )
         print('finished , loading depth refinement module')
 
