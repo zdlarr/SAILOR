@@ -27,7 +27,7 @@ class RenTestOptions(RenTrainOptions):
         # for rendering.
         opts.focal_x          = 360.0
         opts.target_num_views = 1 # we only need one target view for rendering (OOM).
-        opts.num_sampled_rays = 1024 * 32 # rendering in patches. 512 * 512 // (1024 * 4)
+        opts.num_sampled_rays = 1024 * 16 # rendering in patches. 512 * 512 // (1024 * 4)
         
         opts.data_name        = 'SAILOR_test'
         opts.phase            = 'testing'
