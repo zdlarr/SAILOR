@@ -9,6 +9,7 @@ from depth_denoising.net import BodyDRM2, BodyDRM3, DepthRefineModule
 
 opts = RenTrainOptions().parse()
 opts.test_tensorRT = False
+opts.num_gpus = 2
 
 # the network based on hrnet structure,
 # batch_size = 2 here.
@@ -23,12 +24,21 @@ if not opts.test_tensorRT:
     
     bodydrm.load_state_dict(torch.load(drm_path), strict=False)
     bodydrm_trt = TRTModule()
-    x = torch.randn([2,5, 512, 512], requires_grad=False).to('cuda:0')
-    bodydrm_trt = torch2trt(bodydrm, [x], max_batch_size=2, fp16_mode=True, strict_type_constraints=False)
-
     util.make_dir('./accelerated_models')
-    torch.save(bodydrm_trt.state_dict(), './accelerated_models/depth_refine_trt_parallel_v0.pth')
-    # torch.save(bodydrm_trt.state_dict(), './accelerated_models/depth_refine_trt_parallel_v1.pth')
+    print('transform to tensorrt model...')
+    if opts.num_gpus == 2: # the batch-size is 2 here.
+        x = torch.randn([2,5, 512, 512], requires_grad=False).to('cuda:0')
+        bodydrm_trt = torch2trt(bodydrm, [x], max_batch_size=2, fp16_mode=True)
+
+        torch.save(bodydrm_trt.state_dict(), './accelerated_models/depth_refine_trt_parallel_v0.pth')
+        # torch.save(bodydrm_trt.state_dict(), './accelerated_models/depth_refine_trt_parallel_v1.pth')
+    elif opts.num_gpus == 1:
+        x = torch.randn([4,5, 512, 512], requires_grad=False).to('cuda:0')
+        bodydrm_trt = torch2trt(bodydrm, [x], max_batch_size=4, fp16_mode=True)
+
+        torch.save(bodydrm_trt.state_dict(), './accelerated_models/depth_refine_trt_parallel_v0_big.pth')
+        # torch.save(bodydrm_trt.state_dict(), './accelerated_models/depth_refine_trt_parallel_v1_big.pth')
+        
 else:
     bodydrm_trt = TRTModule()
     x = torch.randn([2,5, 512, 512], requires_grad=False).to('cuda:0')
