@@ -37,7 +37,7 @@ class RenTestOptions(RenTrainOptions):
         opts.num_threads      = 0 # the num of the threads for dataset.
         opts.rendering_seperate_angle = 6 # seperate 60 degrees.
         opts.pre_fuse_depths  = True
-        opts.support_post_fusion = True
+        opts.support_post_fusion = False # post-merging
         
         # sampling points, enough points here.
         opts.octree_rate               = 4
