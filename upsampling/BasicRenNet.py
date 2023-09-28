@@ -287,7 +287,7 @@ class BasicRenNet(nn.Module):
             o_c = torch.full( [self.batch_size, self.num_sampled_rays, 3], 0, device=sorted_depths.device, dtype=torch.float32 )
             o_d = torch.full( [self.batch_size, self.num_sampled_rays, 1], 0, device=sorted_depths.device, dtype=torch.float32 )
 
-            valid_rays = torch.prod(sorted_depths != -1, dim=-1) # [B, N_rays], all rays are valid for training.
+            valid_rays = torch.prod(sorted_dists != -1, dim=-1) # [B, N_rays], all rays are valid for training.
             valid_rays_idx = torch.where( valid_rays[0] == True )[0]
             if valid_rays_idx.shape[0] == 0: # no valid rays;
                 return o_c_feats, o_c, o_d
@@ -325,9 +325,9 @@ class BasicRenNet(nn.Module):
         output_rgbs = output_rgbs_feats[...,:3]; output_rgbs_feat = output_rgbs_feats[...,3:]
         
         if not (self.is_train and self.opts.phase == 'training'):
-            o_c_feats[:, valid_rays_idx] = output_rgbs_feat
-            o_c[:, valid_rays_idx]       = output_rgbs
-            o_d[:, valid_rays_idx]       = output_d
+            o_c_feats[:, valid_rays_idx] = output_rgbs_feat.clone()
+            o_c[:, valid_rays_idx]       = output_rgbs.clone()
+            o_d[:, valid_rays_idx]       = output_d.clone()
             
             return o_c_feats, o_c, o_d
         
@@ -407,7 +407,7 @@ class BasicRenNet(nn.Module):
         weight_c     = weights.view( self.batch_size, -1, 1 )
 
         if not (self.is_train and self.opts.phase == 'training'):
-            o_c_detail[:, valid_rays_idx] = rgbs_details.view(self.batch_size, -1, 4, 3)
+            o_c_detail[:, valid_rays_idx] = rgbs_details.view(self.batch_size, -1, 4, 3).clone()
             return o_c_detail.view( self.batch_size, -1, 3 ), o_d, weight_c
 
         return rgbs_details, o_d, weight_c
@@ -418,7 +418,7 @@ class BasicRenNet(nn.Module):
         _, proj_xy, proj_z = proj_persp( sampled_points, self._Ks, self._Rs, self._Ts, None, self.num_views )
         proj_xy = proj_xy.permute(0,2,1).view( proj_z.shape[0], -1, 1, 2 );  # [B*Nv, N_p, 2 and 1]
         # sample geo-features, and diff-z.
-        if self.opts.lam_reg == 0:
+        if self.opts.lam_reg == 0 or (not self.is_train):
             sampled_geo_feats = F.grid_sample(self._geo_features, proj_xy, align_corners=True, mode='bilinear')[..., 0] # [B*N, C, N_points.]
             sampled_depths    = F.grid_sample(self._depths, proj_xy, align_corners=True, mode='bilinear')[..., 0] # [B*N, 1, N_points.]
         else: # using gradient.
