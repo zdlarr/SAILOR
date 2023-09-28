@@ -8,6 +8,7 @@ from depth_denoising.net import HRNetUNet
 
 opts = RenTrainOptions().parse()
 opts.test_tensorRT = False
+opts.num_gpus = 2
 
 # batch_size = 2 here.
 if not opts.test_tensorRT:
@@ -27,14 +28,21 @@ if not opts.test_tensorRT:
     filter_2d.load_state_dict( state_dicts_, strict=True )
     print('fin load hrnetunet model..')
     # process half of the data.
-    filter_2d_trt = TRTModule()
-    x = torch.randn([2, 3, 512, 512], requires_grad=False).to('cuda:0')
-    y = torch.randn([2, 1, 512, 512], requires_grad=False).to('cuda:0')
-    
+
     print('transform to tensorrt model...')
-    filter_2d_trt = torch2trt(filter_2d, [x,y], max_batch_size=2, fp16_mode=True)
     util.make_dir('./accelerated_models')
-    torch.save(filter_2d_trt.state_dict(), './accelerated_models/hrunet_trt_parallel.pth')
+    filter_2d_trt = TRTModule()
+    if opts.num_gpus == 2: # the batch-size is 2 here.
+        x = torch.randn([2, 3, 512, 512], requires_grad=False).to('cuda:0')
+        y = torch.randn([2, 1, 512, 512], requires_grad=False).to('cuda:0')
+        filter_2d_trt = torch2trt(filter_2d, [x,y], max_batch_size=2, fp16_mode=True)
+        torch.save(filter_2d_trt.state_dict(), './accelerated_models/hrunet_trt_parallel.pth')
+    elif opts.num_gpus == 1: # the batch-size is 4 here.
+        x = torch.randn([4, 3, 512, 512], requires_grad=False).to('cuda:0')
+        y = torch.randn([4, 1, 512, 512], requires_grad=False).to('cuda:0')
+        filter_2d_trt = torch2trt(filter_2d, [x,y], max_batch_size=4, fp16_mode=True)
+        torch.save(filter_2d_trt.state_dict(), './accelerated_models/hrunet_trt_parallel_big.pth')
+    
 else:
     filter_2d_trt = TRTModule()
     x = torch.randn([2, 3, 512, 512], requires_grad=False).to('cuda:0')
