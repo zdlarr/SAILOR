@@ -201,7 +201,8 @@ class BasicRenNet(nn.Module):
         if (not self.is_train) and self.opts.support_post_fusion:
             new_b_min = self._vol_bbox[:,[2,1,0],0].unsqueeze(1) # [BZ, 1, 3]
             new_b_max = self._vol_bbox[:,[2,1,0],1].unsqueeze(1) # [BZ, 1, 3]
-            self._reconEngine.update_bmin_bmax( new_b_min, new_b_max )
+            self._reconEngine.b_min = new_b_min
+            self._reconEngine.b_max = new_b_max
             output_volume = self._reconEngine()
             # forward the volume, [B,N,N,N];
             output_volume = F.interpolate( output_volume, (self.opts.volume_dim, self.opts.volume_dim, self.opts.volume_dim) )[0]
