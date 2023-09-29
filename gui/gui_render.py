@@ -1211,7 +1211,7 @@ if __name__ == '__main__':
     opts.ren_data_root = './test_data/static_data0'
     # opts.ren_data_root = './test_data/dynamic_data0'
 
-    opts.num_gpus = 1
+    opts.num_gpus = 2 # [2 as default,1 (slow)]
 
     if opts.num_gpus == 2: # batch-size is 2 for each trt-module.
         drm_path   = os.path.join( rend_model_dir, 'depth_refine_trt_parallel_v0.pth' )
