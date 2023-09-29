@@ -1,6 +1,6 @@
-
-from random import random
-
+'''
+    Depth denoising Arch.
+'''
 
 import os
 import torch
@@ -24,8 +24,6 @@ from depth_denoising.net import DepthRefineModule
 from c_lib.VoxelEncoding.depth_normalization import DepthNormalizer
 
 import time
-import pytorch3d
-from pytorch3d.loss import chamfer_distance
 import cv2
 
 class DepthDenoising(BasicNet):
@@ -169,6 +167,7 @@ class DepthDenoising(BasicNet):
         return
 
     def extend_depth_error(self, preds, labels):
+        from pytorch3d.loss import chamfer_distance
         # neighbor_views : [B, N_t, 2], 
         # pred : [B*N_v, 1, h, w]; labels : [B*N_v, 1, h, w]
         nl_gt = self.depth2normal(labels, self.ks.view(-1,3,3))
