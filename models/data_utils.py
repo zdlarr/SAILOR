@@ -17,7 +17,6 @@ import random
 import matplotlib.pyplot as plt
 from PIL import Image, ImageOps
 from scipy import ndimage
-from guided_filter_pytorch.guided_filter import FastGuidedFilter
 
 def normalize_depth(opts, depth, if_clip=True):
     
