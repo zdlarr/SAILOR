@@ -1,0 +1,17 @@
+opencv-python
+numpy
+matplotlib
+trimesh
+scipy
+tqdm
+Pillow
+py3nvml
+glfw
+pyglm
+pyopengl
+imgui
+kornia
+timm
+open3d==0.10.0
+mcubes
+scikit-image=0.15.0
