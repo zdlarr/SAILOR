@@ -38,6 +38,7 @@ Install the surface localization algorithm named [ImplicitSeg](https://github.co
 
 Our code has been tested under the following system :
 - Ubuntu 18.04, 20.04 or 22.04
+- Python 3.8 and PyTorch 1.8.0
 - GCC/G++ 9.5.0
 - Nvidia GPU (RTX 3090) CUDA 11.1 CuDNN
 
@@ -52,7 +53,7 @@ cmake .. && make
 
 ## Setup
 - Clone or download this repo
-- Download our pretrained depth denoising model (```latest_model_BodyDRM2.pth```) and our rendering model (```latest_model_BasicRenNet.pth```) [here](https://drive.google.com/drive/folders/1K39fWyGXOwocUCCJQyYd5YIwqHLrmWkl)
+- Download our pretrained depth denoising model (```latest_model_BodyDRM2.pth```) and our rendering model (```latest_model_BasicRenNet.pth```) <b>[here](https://drive.google.com/drive/folders/1K39fWyGXOwocUCCJQyYd5YIwqHLrmWkl)</b>
 - Move the downloaded models to ```./checkpoints_rend/SAILOR``` folder
 
 ## Usage
@@ -82,7 +83,7 @@ The example static test data is provided in ```./test_data```, the data structur
 <br/>
 
 <b>Depth denoising</b> : 
-- Run ```python -m depth_denoising.inference```
+- Run <b>```python -m depth_denoising.inference```</b>
 - The original and denoised point clouds are in the ```./depth_denoising/results``` folder. Use [meshlab](https://www.meshlab.net/) to visualize the 3D results
 - Modify ```basic_path```, ```frame idx``` and ```view_id``` in the file ```inference.py``` to obtain the results of other examples
 
@@ -91,10 +92,10 @@ The example static test data is provided in ```./test_data```, the data structur
 <br/>
 
 <b>SRONet and SRONetUp</b> :
-- For provided static data, run ```python -m upsampling.inference_static --name SAILOR``` (in 1K resolution) or ```python -m SRONet.inference_static --name SAILOR``` (in 512 resolution), to obtain the reconstructed 3D mesh and free-view rendering results.
+- For provided static data, run <b>```python -m upsampling.inference_static --name SAILOR```</b> (in 1K resolution) or <b>```python -m SRONet.inference_static --name SAILOR```</b> (in 512 resolution), to obtain the reconstructed 3D mesh and free-view rendering results.
 - The reconstructed 3D meshes are in the ```./checkpoints_rend/SAILOR/val_results``` folder. To render the 3D mesh, run ```python -m utils_render.render_mesh``` to obtain the free-view mesh rendering results. Modify ```opts.ren_data_root```, ```obj_path``` and ```obj_name``` in the file ```render_mesh.py``` to get new results.
-- For dynamic data, first download our <b>real-captured data</b> [here](https://drive.google.com/drive/folders/1p3oQY5qxUnzLMJXHfrrrSPxWAHP_t2wr), unzip the data and put them in the ```./test_data``` folder
-- For dynamic data, then run ```python -m upsampling.inference_dynamic --name SAILOR``` or ```python -m SRONet.inference_dynamic --name SAILOR``` to obtain the rendering results.
+- For dynamic data, first download our <b>real-captured data [here](https://drive.google.com/drive/folders/1p3oQY5qxUnzLMJXHfrrrSPxWAHP_t2wr)</b>, unzip the data and put them in the ```./test_data``` folder
+- For dynamic data, then run <b>```python -m upsampling.inference_dynamic --name SAILOR```</b> or <b>```python -m SRONet.inference_dynamic --name SAILOR```</b> to obtain the rendering results.
 - Modify ```opts.ren_data_root``` and ```opts.data_name``` in ```inference_static.py``` and ```inference_dynamic.py``` to obtain new rendering results
 - The rendering images and videos are in the ```./SRONet(or upsampling)/results``` folder.
 
@@ -107,7 +108,7 @@ The example static test data is provided in ```./test_data```, the data structur
 We release our interactive rendering GUI for our real-captured dataset.
 - TensorRT is required to accelerate our depth denoising network and the encoders in SRONet(upsampling). Please refer to [TensorRT installation guide](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html) and then install [torch2trt](https://github.com/NVIDIA-AI-IOT/torch2trt). Our TensorRT version is 7.2
 - Run ```python -m depth_denoising.toTensorRT```, ```python -m SRONet.toTensorRT``` and ```python -m upsampling.toTensorRT``` to obtain the TRTModules. The final pth models are in the ```./SAILOR/accelerated_models``` folder
-- Run ```python -m gui.gui_render```. Modify the ```opts.ren_data_root``` in ```gui_render.py``` to test other data, and modify the ```opts.num_gpus``` to use 1 GPU (slow) or 2 GPUs. The GIF below shows the rendering result of using 2 Nvidia RTX 3090, an Intel i9-13900k, and an MSI Z790 god-like motherboard
+- <b>Run ```python -m gui.gui_render```</b>. Modify the ```opts.ren_data_root``` in ```gui_render.py``` to test other data, and modify the ```opts.num_gpus``` to use 1 GPU (slow) or 2 GPUs. The GIF below shows the rendering result of using 2 Nvidia RTX 3090, an Intel i9-13900k, and an MSI Z790 god-like motherboard
 
 <div align="center"><img src="./assets/interactive_rendering.gif" width="75%"></div>
 
