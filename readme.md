@@ -108,7 +108,7 @@ The example static test data is provided in ```./test_data```, the data structur
 We release our interactive rendering GUI for our real-captured dataset.
 - TensorRT is required to accelerate our depth denoising network and the encoders in SRONet(upsampling). Please refer to [TensorRT installation guide](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html) and then install [torch2trt](https://github.com/NVIDIA-AI-IOT/torch2trt). Our TensorRT version is 7.2
 - Run ```python -m depth_denoising.toTensorRT```, ```python -m SRONet.toTensorRT``` and ```python -m upsampling.toTensorRT``` to obtain the TRTModules. The final pth models are in the ```./SAILOR/accelerated_models``` folder
-- <b>Run ```python -m gui.gui_render```</b>. Modify the ```opts.ren_data_root``` in ```gui_render.py``` to test other data, and modify the ```opts.num_gpus``` to use 1 GPU (slow) or 2 GPUs. The GIF below shows the rendering result of using 2 Nvidia RTX 3090, an Intel i9-13900k, and an MSI Z790 god-like motherboard
+- <b style="color:yellow">Run ```python -m gui.gui_render```</b>. Modify the ```opts.ren_data_root``` in ```gui_render.py``` to test other data, and modify the ```opts.num_gpus``` to use 1 GPU (slow) or 2 GPUs. The GIF below shows the rendering result of using 2 Nvidia RTX 3090, an Intel i9-13900k, and an MSI Z790 god-like motherboard
 
 <div align="center"><img src="./assets/interactive_rendering.gif" width="75%"></div>
 
