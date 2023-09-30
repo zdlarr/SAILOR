@@ -15,14 +15,13 @@ from upsampling.options.RenTestOptions import RenTestOptions
 
 opts = RenTestOptions().parse()
 opts.rendering_static = True
-# opts.ren_data_root    = './test_data/static_data0'
+opts.ren_data_root    = './test_data/static_data0'
 # opts.ren_data_root    = './test_data/static_data1'
-opts.ren_data_root    = './test_data/static_data2'
 
 test_dataset = RenTestDataloader(opts, phase=opts.phase)
 
-obj_path = './checkpoints_rend/SAILOR/val_results/FRAME3698_epoch_test.obj'
-obj_name = 'FRAME3698_epoch_test'
+obj_path = './checkpoints_rend/SAILOR/val_results/FRAME0001_epoch_test.obj'
+obj_name = 'FRAME0001_epoch_test'
 output_path = os.path.join('./checkpoints_rend/SAILOR/', obj_name)
 
 mesh = trimesh.load(obj_path)
