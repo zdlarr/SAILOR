@@ -1,6 +1,8 @@
 <h2 align="center">SAILOR: Synergizing Radiance and Occupancy Fields for Live Human Performance Capture</h2>
 
-<div align="center"><i>SAILOR: Synergizing Radiance and Occupancy Fields for Live Human Performance Capture <b>(SIGGRAPH ASIA 2023)</b></i></div>
+<div align="center"><i>Zheng Dong, Xu Ke, Yaoan Gao, Qilin Sun, Hujun Bao, Weiwei Xu*, Rynson W.H. Lau
+</br>
+ <b>SIGGRAPH ASIA 2023</b></i></div>
 
 <img src="./assets/teaser.png" width="100%">
 <p align="center">SAILOR is a generalizable method for human free-view rendering and reconstruction from <b>very sparse (<i>e.g.</i>, 4) RGBD streams </b>, achieving <b>near real-time</b> performance under acceleration.</p>
@@ -83,7 +85,7 @@ The example static test data is provided in ```./test_data```, the data structur
 <br/>
 
 <b>Depth denoising</b> : 
-- Run <b>```python -m depth_denoising.inference```</b>
+- <b style="color:yellow">Run ```python -m depth_denoising.inference```</b>
 - The original and denoised point clouds are in the ```./depth_denoising/results``` folder. Use [meshlab](https://www.meshlab.net/) to visualize the 3D results
 - Modify ```basic_path```, ```frame idx``` and ```view_id``` in the file ```inference.py``` to obtain the results of other examples
 
@@ -92,10 +94,10 @@ The example static test data is provided in ```./test_data```, the data structur
 <br/>
 
 <b>SRONet and SRONetUp</b> :
-- For provided static data, run <b>```python -m upsampling.inference_static --name SAILOR```</b> (in 1K resolution) or <b>```python -m SRONet.inference_static --name SAILOR```</b> (in 512 resolution), to obtain the reconstructed 3D mesh and free-view rendering results.
+- For provided static data, <b style="color:yellow">run ```python -m upsampling.inference_static --name SAILOR```</b> (in 1K resolution) or <b>```python -m SRONet.inference_static --name SAILOR```</b> (in 512 resolution), to obtain the reconstructed 3D mesh and free-view rendering results.
 - The reconstructed 3D meshes are in the ```./checkpoints_rend/SAILOR/val_results``` folder. To render the 3D mesh, run ```python -m utils_render.render_mesh``` to obtain the free-view mesh rendering results. Modify ```opts.ren_data_root```, ```obj_path``` and ```obj_name``` in the file ```render_mesh.py``` to get new results.
 - For dynamic data, first download our <b>real-captured data [here](https://drive.google.com/drive/folders/1p3oQY5qxUnzLMJXHfrrrSPxWAHP_t2wr)</b>, unzip the data and put them in the ```./test_data``` folder
-- For dynamic data, then run <b>```python -m upsampling.inference_dynamic --name SAILOR```</b> or <b>```python -m SRONet.inference_dynamic --name SAILOR```</b> to obtain the rendering results.
+- For dynamic data, then <b style="color:yellow">run ```python -m upsampling.inference_dynamic --name SAILOR```</b> or <b>```python -m SRONet.inference_dynamic --name SAILOR```</b> to obtain the rendering results.
 - Modify ```opts.ren_data_root``` and ```opts.data_name``` in ```inference_static.py``` and ```inference_dynamic.py``` to obtain new rendering results
 - The rendering images and videos are in the ```./SRONet(or upsampling)/results``` folder.
 
