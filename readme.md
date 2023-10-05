@@ -122,4 +122,15 @@ The code, models, and GUI demos in this repository are released under the [GPL-3
 
 If you find our work helpful to your research, please cite our paper.
 
-
+```bash
+@article{dong2023sailor,
+author = {Zheng Dong, Xu Ke, Yaoan Gao, Qilin Sun, Hujun Bao, Weiwei Xu, Rynson W.H. Lau},
+title = {SAILOR: Synergizing Radiance and Occupancy Fields for Live Human Performance Capture},
+year = {2023},
+journal = {ACM Transactions on Graphics (TOG)},
+volume = {42},
+number = {6},
+doi = {10.1145/3618370},
+publisher = {ACM}
+}
+```
