@@ -1,6 +1,6 @@
 <h2 align="center">SAILOR: Synergizing Radiance and Occupancy Fields for Live Human Performance Capture</h2>
 
-<div align="center"><i>Zheng Dong, Xu Ke, Yaoan Gao, Qilin Sun, Hujun Bao, Weiwei Xu*, Rynson W.H. Lau
+<div align="center"><i><a href='http://zdlarry.github.io'>Zheng Dong</a>, Xu Ke, Yaoan Gao, Qilin Sun, Hujun Bao, Weiwei Xu*, Rynson W.H. Lau
 </br>
  <b>SIGGRAPH ASIA 2023</b></i></div>
 
