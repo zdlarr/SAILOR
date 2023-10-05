@@ -96,7 +96,7 @@ The example static test data is provided in ```./test_data```, the data structur
 <b>SRONet and SRONetUp</b> :
 - For provided static data, <b style="color:yellow">run ```python -m upsampling.inference_static --name SAILOR```</b> (in 1K resolution) or <b>```python -m SRONet.inference_static --name SAILOR```</b> (in 512 resolution), to obtain the reconstructed 3D mesh and free-view rendering results.
 - The reconstructed 3D meshes are in the ```./checkpoints_rend/SAILOR/val_results``` folder. To render the 3D mesh, run ```python -m utils_render.render_mesh``` to obtain the free-view mesh rendering results. Modify ```opts.ren_data_root```, ```obj_path``` and ```obj_name``` in the file ```render_mesh.py``` to get new results.
-- For dynamic data, first download our <b>real-captured data [here](https://drive.google.com/drive/folders/1p3oQY5qxUnzLMJXHfrrrSPxWAHP_t2wr)</b>, unzip the data and put them in the ```./test_data``` folder
+- For dynamic data, first download our <span id="data"><b>real-captured data [here](https://drive.google.com/drive/folders/1p3oQY5qxUnzLMJXHfrrrSPxWAHP_t2wr)</b></span>, unzip the data and put them in the ```./test_data``` folder
 - For dynamic data, then <b style="color:yellow">run ```python -m upsampling.inference_dynamic --name SAILOR```</b> or <b>```python -m SRONet.inference_dynamic --name SAILOR```</b> to obtain the rendering results.
 - Modify ```opts.ren_data_root``` and ```opts.data_name``` in ```inference_static.py``` and ```inference_dynamic.py``` to obtain new rendering results
 - The rendering images and videos are in the ```./SRONet(or upsampling)/results``` folder.
