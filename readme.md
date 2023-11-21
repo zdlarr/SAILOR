@@ -14,11 +14,12 @@
 <p align="center">
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
 <a href="https://developer.nvidia.com/cuda-toolkit"><img alt="CUDA" src="https://img.shields.io/badge/-CUDA-792ee5?logo=CUDA&logoColor=white"></a>
+<a href="https://developer.nvidia.com/tensorrt"><img alt="TensorRT" src="https://img.shields.io/badge/-TensorRT-792ee5?logo=TensorRT&logoColor=white"></a>
 <br/>
 <a href=''>
     <img src='https://img.shields.io/badge/arXiv-Paper-blue?style=for-the-badge&logo=arXiv&logoColor=white' alt='Paper PDF'>
 </a>
-<a href='' style='padding-left: 0.5rem;'>
+<a href='https://zdlarry.github.io/projects/SAILOR' style='padding-left: 0.5rem;'>
       <img src='https://img.shields.io/badge/SAILOR-Page-blue?style=for-the-badge&logo=Google%20chrome&logoColor=white' alt='Project Page'></a>
 <a href="https://www.youtube.com/watch?v=88tX22Z0Dz0" style='padding-left: 0.5rem;'><img alt="youtube views" title="" src="https://img.shields.io/youtube/views/88tX22Z0Dz0?logo=youtube&labelColor=gray&style=for-the-badge"/></a>
 <a href="#license" style='padding-left: 0.5rem;'><img src='https://img.shields.io/badge/-LICENSE-blue?style=for-the-badge&logo=LICENSE&logoColor=white' alt='LICENSE'></a>
